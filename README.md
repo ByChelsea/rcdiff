@@ -171,3 +171,22 @@ python rcdiff/scripts/evaluate_rcdiff_metrics.py \
 ```
 
 GT metric features are cached under `data/metric_cache` and reused automatically. Use `--refresh-gt-cache` to recompute them.
+
+## Citation
+
+If you find this work useful, please consider citing:
+
+```bibtex
+@InProceedings{Chen_2026_CVPR,
+  author    = {Chen, Xuhai and Cen, Zhi and Pi, Huaijin and Peng, Sida and Zhou, Xiaowei and Liu, Yong},
+  title     = {Contact Matrix: Enhancing Dance Motion Synthesis with Precise Interaction Modeling},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+  month     = {June},
+  year      = {2026}
+}
+```
+
+## Acknowledgement
+
+This codebase is built upon [EasyVolcap](https://github.com/zju3dv/EasyVolcap). We also thank [Duolando](https://lisiyao21.github.io/projects/Duolando/) for their excellent work and for releasing the DD100 dataset.
+```
