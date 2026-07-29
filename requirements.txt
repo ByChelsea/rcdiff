@@ -1,0 +1,8 @@
+einops==0.8.2
+jukebox==0.4.1
+numpy==2.5.1
+opencv_python==5.0.0.93
+scipy==1.18.0
+setuptools==80.10.2
+tqdm==4.68.3
+trimesh==4.12.2

@@ -1,0 +1,47 @@
+exp_name: debug
+mocking: False
+detect_anomaly: False
+fix_random: False
+allow_tf32: False
+deterministic: False
+benchmark: False
+profiler_cfg:
+    enabled: False
+print_model: False
+preparing_parser: False
+
+window_cfg:
+    vocab_size: 512
+    vqmotion_window_size: 64
+    unit_length: 4
+    block_size: &block_size 48
+    gpttoken_window_size: *block_size
+    infer_gpttoken_window_size: 1
+
+dataloader_cfg: &dataloader_cfg
+    type: DefaultDataloader
+    batch_sampler_cfg:
+        batch_size: 8
+        drop_last: True
+
+val_dataloader_cfg:
+    <<: *dataloader_cfg
+    max_iter: -1
+    batch_sampler_cfg:
+        batch_size: 1
+        drop_last: False
+
+runner_cfg: &runner_cfg
+    type: LowLevelMoPredRunner
+    epochs: 200
+    ep_iter: 1000
+    eval_ep: 40
+    visualizer_cfg:
+        result_dir: "" # avoid import error
+        save_tag: "" # avoid import error
+    scheduler_cfg:
+        type: NoopLR
+    moderator_cfg:
+        type: DatasetRatioModerator
+    recorder_cfg:
+        type: EgoMoCapTensorboardRecorder

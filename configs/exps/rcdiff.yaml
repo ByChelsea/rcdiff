@@ -1,0 +1,84 @@
+exp_name: rcdiff
+configs:
+  - configs/base.yaml
+
+motoken_cfg_file: data/record/partfusion-vq/partfusion-vq_20260707_2110.yaml
+transl_cfg_file: data/record/transl-vq/transl-vq_20260710_1659.yaml
+contact_cfg_file: data/record/contact-vq/contact-vq_20260710_1659.yaml
+
+norm_cfg:
+  motoken_input_norm_file: auto
+
+model_cfg:
+    type: TransformerDiffusion
+    use_ddim: True
+    f_name: &f_name 'npys'
+    causal: &causal False
+    network_cfg:
+      f_name: *f_name
+      block_size: &block_size 100
+      causal: *causal
+      modeltype: ''
+      njoints: 55
+      nfeats: 6
+      translation: True
+      glob: True
+      glob_rot: True
+      latent_dim: 512
+      ff_size: 1024
+      num_layers: 8
+      num_heads: 4
+      dropout: 0.1
+      activation: 'gelu'
+      cm_mode: 'concat'
+      body_model: 'smplx'
+      wo_pos_emb: False
+      emb_trans_dec: False
+      num_person: 2
+      arch: 'online'
+      mse_flag: False
+      follower_joints: 24
+      leader_joints: 24
+    diffusion_cfg:
+      timestep_respacing: ''
+      noise_schedule: 'cosine'
+      sigma_small: True
+      num_person: 1
+    ds_rate: 4
+    block_size: *block_size
+
+dataloader_cfg:
+    type: DefaultDataloader
+    batch_sampler_cfg:
+        batch_size: 16
+    dataset_cfg: &dataset_cfg
+        type: DD100lfAll
+        music_root: /path/to/DD100/music
+        motion_root: /path/to/DD100/motion
+        move: 4
+        dtype: both
+        split: train
+        interval: 400
+        music_dance_rate: 1
+        contact_root: /path/to/DD100/motion/contact_24joints2
+
+val_dataloader_cfg:
+    dataset_cfg:
+        <<: *dataset_cfg
+        split: test
+        interval: None
+
+runner_cfg:
+    type: MoConRunner
+    epochs: 500
+    ep_iter: 1000  
+    eval_ep: 100
+    save_ep: 10
+    ema_cfg:
+      enabled: True
+    optimizer_cfg:
+        type: AdamW
+        lr: 1.0e-4
+    evaluator_cfg:
+        type: RCDiffEvaluator
+        metric_names: []

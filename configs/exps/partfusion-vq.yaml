@@ -1,0 +1,24 @@
+exp_name: partfusion-vq
+configs:
+  - configs/base.yaml
+  - configs/models/partfusion-vq.yaml
+
+dataloader_cfg:
+    type: DefaultDataloader
+    batch_sampler_cfg:
+        batch_size: 128
+    dataset_cfg: &dataset_cfg
+        type: DD100M
+        data_root: /path/to/DD100/motion
+        move: 4
+        dtype: both
+        interval: 240
+        split: train
+
+val_dataloader_cfg:
+    dataset_cfg:
+        <<: *dataset_cfg
+        interval: None
+        split: test
+
+    

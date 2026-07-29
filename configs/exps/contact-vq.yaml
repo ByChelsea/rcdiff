@@ -1,0 +1,26 @@
+exp_name: contact-vq
+configs:
+  - configs/base.yaml
+  - configs/models/contact-vq.yaml
+
+dataloader_cfg:
+    type: DefaultDataloader
+    batch_sampler_cfg:
+        batch_size: 128
+    dataset_cfg: &dataset_cfg
+        type: DD100lfAll
+        music_root: /path/to/DD100/music
+        motion_root: /path/to/DD100/motion
+        move: 4
+        dtype: both
+        interval: 240
+        split: train
+        music_dance_rate: 1
+        drop_prob: 0.8
+        contact_root: /path/to/DD100/motion/contact_24joints2
+
+val_dataloader_cfg:
+    dataset_cfg:
+        <<: *dataset_cfg
+        interval: None
+        split: test
