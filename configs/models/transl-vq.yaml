@@ -1,0 +1,42 @@
+model_cfg:
+    type: TranslVQVAE
+    network_cfg:
+        type: VQVAE
+        levels: 1
+        downs_t: [2,]
+        strides_t: [2,]
+        emb_width: 512
+        l_bins: 512
+        l_mu: 0.99
+        commit: 0.02
+        hvqvae_multipliers: [1,]
+        width: 512
+        depth: 3
+        m_conv: 1.0
+        dilation_growth_rate: 3
+        sample_length: 240
+        use_bottleneck: True
+        input_dim: 3
+        vel: 1
+        acc: 1
+        vqvae_reverse_decoder_dilation: True
+
+runner_cfg:
+    type: LowLevelMoPredRunner
+    epochs: 500
+    ep_iter: 1000
+    eval_ep: 50
+    save_ep: 50
+    optimizer_cfg:
+        type: Adam
+        lr: 0.00003
+        betas: [0.5, 0.999]
+        weight_decay: 0
+    scheduler_cfg:
+        type: MultiStepLR
+        milestones: [ 100000, 200000 ]
+        gamma: 0.1
+    evaluator_cfg:
+        type: TranslVQEvaluator
+        metric_names:
+            - transl_error

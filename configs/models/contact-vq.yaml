@@ -1,0 +1,42 @@
+model_cfg:
+    type: ContactVQVAE
+    transl: False
+    network_cfg:
+        type: VQVAEC
+        levels: 1
+        downs_t: [2,]
+        strides_t: [2,]
+        emb_width: 512
+        l_bins: 512
+        l_mu: 0.99
+        hvqvae_multipliers: [1,]
+        width: 512
+        depth: 3
+        m_conv: 1.0
+        dilation_growth_rate: 3
+        sample_length: 240
+        use_bottleneck: True
+        input_dim: 512
+        recon: 1
+        commit: 0.02
+        persistence: 0
+        sparsity: 0
+        vqvae_reverse_decoder_dilation: True
+
+runner_cfg:
+    type: LowLevelMoPredRunner
+    epochs: 150
+    ep_iter: 1000
+    eval_ep: 50
+    save_ep: 50
+    optimizer_cfg:
+        type: AdamW
+        lr: 1.0e-4
+    evaluator_cfg:
+        type: ContactVQEvaluator
+        metric_names:
+            - accuracy
+            - precision
+            - recall
+            - f1
+            - iou

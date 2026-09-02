@@ -1,23 +1,14 @@
 __pycache__/
 rcdiff.egg-info/
 data/
-Duolando/
 *.slurm
 .slurm/
 *.out
 .idea/
 npys/
-npys_bl2d/
-npys_only_pos/
-npys_only_pos_s/
-npys_test/
-npys_s/
-data_0113/
-data_0409/
 logs/
 check/
 smplx/
-models/
 
 # Native build artifacts
 /rcdiff/utils/motion_metrics/contact/torch_mesh_isect/build/
